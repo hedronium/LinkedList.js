@@ -1,8 +1,8 @@
-var Node = function () {
-	this._value = null;
+var Node = function (value, previous, next) {
+	this._value = value;
 	
-	this._previous = null;
-	this._next = null;
+	this._previous = previous;
+	this._next = next;
 };
 
 Node.prototype.value = function () {

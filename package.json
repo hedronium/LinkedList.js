@@ -1,0 +1,28 @@
+{
+  "name": "linkedlist.js",
+  "version": "1.0.0",
+  "description": "A Doubly Linked List Implementation in Javascript",
+  "main": "List.js",
+  "scripts": {
+    "test": "mocha tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hedronium/LinkedList.js.git"
+  },
+  "keywords": [
+    "doubly",
+    "linked",
+    "list"
+  ],
+  "author": "Omran Jamal <o.jamal97@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Hedronium/LinkedList.js/issues"
+  },
+  "homepage": "https://github.com/Hedronium/LinkedList.js#readme",
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "mocha": "^2.3.4"
+  }
+}

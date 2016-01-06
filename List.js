@@ -6,19 +6,19 @@ var List = function () {
 	this._tail = null;
 };
 
-LinkedList.prototype.head = function () {
+List.prototype.head = function () {
 	return this._head;
 };
 
-LinkedList.prototype.tail = function () {
+List.prototype.tail = function () {
 	return this._tail;
 };
 
-LinkedList.prototype.count = function () {
+List.prototype.count = function () {
 	return this._count;
 };
 
-LinkedList.prototype.get = function (index) {
+List.prototype.get = function (index) {
 	var node = this._head;
 
 	for (var i = 0; i < index; i++) {
@@ -28,67 +28,115 @@ LinkedList.prototype.get = function (index) {
 	return node;
 };
 
-LinkedList.prototype.set = function (index, value) {
+List.prototype.set = function (index, value) {
 	var node = this.get(index);
-	node.setValue(value);
+	node.set(value);
 };
 
-LinkedList.prototype.push = function (value) {
+List.prototype.push = function (value) {
 	var node = new Node(value, this._tail, null);
 
-	this._tail.setNext(node);
-	this._tail = node;
+	if (this._tail !== null) {
+		this._tail.setNext(node);
+	}
 
+	if (this._head === null) {
+		this._head = node;
+	}
+
+	this._tail = node;
 	this._count++;
 };
 
-LinkedList.prototype.pop = function () {
+List.prototype.pop = function () {
 	var node = this._tail;
 
-	var new_tail = this._tail.previous();
-	new_tail.setNext(null);
+	var new_tail = null;
+	if (this._tail.previous() !== null) {
+		new_tail = this._tail.previous();
+		new_tail.setNext(null);
+	}
+	
 	this._tail = new_tail;
 
 	this._count--;
 
+	if (this._count === 0) {
+		this._head = null;
+	}
+
 	return node;
 };
 
-LinkedList.prototype.unshift = function (value) {
+List.prototype.unshift = function (value) {
 	var node = new Node(value, null, this._head);
 
-	this._head.setPrevious(node);
+	if (this._head !== null) {
+		this._head.setPrevious(node);
+	}
+
+	if (this._tail === null) {
+		this._tail = node;
+	}
+	
 	this._head = node;
 
 	this._count++;
 };
 
-LinkedList.prototype.shift = function () {
+List.prototype.shift = function () {
 	var node = this._head;
-	var new_head = this._head.next();
-	new_head.setPrevious(null);
+
+	var new_head = null;
+	if (this._head.next() !== null) {
+		new_head = this._head.next();
+		new_head.setPrevious(null);
+	}
+
 	this._head = new_head;
 
 	this._count--;
 
+	if (this._count === 0) {
+		this._tail = null;
+	}
+
 	return node;
 };
 
-LinkedList.prototype.asArray = function () {
+List.prototype.asArray = function () {
 	var arr = [];
 	var node = this._head;
 
 	while (node) {
-		arr.push(node);
+		arr.push(node.value());
 		node = node.next();
 	}
 
 	return arr;
 };
 
-LinkedList.prototype.truncateTo = function (index) {
-	this._count = index;
-	this.get(index-1).setNext(null);
+List.prototype.truncateTo = function (length) {
+	this._count = length;
+
+	if (length === 0) {
+		this._head = null;
+		this._tail = null;
+
+		return;
+	}
+
+	var node = this.get(length-1);
+	node.setNext(null);
+	this._tail = node;
+};
+
+List.prototype.empty = function () {
+	this.truncateTo(0);
+};
+
+List.prototype.isEmpty = function () {
+	return this._head === null;
 };
 
 module.exports = List;
