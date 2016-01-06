@@ -1,8 +1,8 @@
 var Node = function (value, previous, next) {
-	this._value = value;
+	this._value = value === undefined ? null : value;
 	
-	this._previous = previous;
-	this._next = next;
+	this._previous = previous === undefined ? null : previous;
+	this._next = next === undefined ? null : next;
 };
 
 Node.prototype.value = function () {

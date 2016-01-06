@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
-var List = require('../List');
-var Node = require('../Node');
+var List = require('../src/List');
+var Node = require('../src/Node');
 
 describe('List class', function () {
 	describe('isEmpty method', function () {

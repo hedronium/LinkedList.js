@@ -1,8 +1,8 @@
 {
-  "name": "linkedlist.js",
+  "name": "linkedlist-js",
   "version": "1.0.0",
   "description": "A Doubly Linked List Implementation in Javascript",
-  "main": "List.js",
+  "main": "index.js",
   "scripts": {
     "test": "mocha tests"
   },
@@ -13,7 +13,9 @@
   "keywords": [
     "doubly",
     "linked",
-    "list"
+    "list",
+    "data",
+    "structure"
   ],
   "author": "Omran Jamal <o.jamal97@gmail.com>",
   "license": "MIT",
