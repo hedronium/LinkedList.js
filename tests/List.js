@@ -21,7 +21,7 @@ describe('List class', function () {
 		it('Pushes a new Node onto the end', function () {
 			var list = new List();
 
-			list.push('TEST1');
+			expect(list.push('TEST1')).to.be.instanceOf(Node);
 			expect(list.isEmpty()).to.be.false;
 			expect(list.count()).to.be.equal(1);
 			expect(list.head().value()).to.be.equal('TEST1');
@@ -58,7 +58,7 @@ describe('List class', function () {
 		it('Adds a Node to the start of the List', function () {
 			var list = new List();
 
-			list.unshift('2nd');
+			expect(list.unshift('2nd')).to.be.instanceOf(Node);
 			expect(list.head()).to.be.an.instanceOf(Node);
 			expect(list.tail()).to.be.an.instanceOf(Node);
 
@@ -250,6 +250,26 @@ describe('List class', function () {
 			expect(list.count()).to.be.equal(0);
 			expect(list.head()).to.be.null;
 			expect(list.tail()).to.be.null;
+		});
+	});
+
+	describe('find method', function () {
+		it('Performs a linear search on the List and returns the Node if found', function () {
+			var list = new List();
+			list.push('TEST1');
+			var find = list.push('TEST2');
+			list.push('TEST3');
+
+			expect(list.find('TEST2')).to.be.equal(find);
+		});
+
+		it('Performs a linear search on the List and returns null if nto found', function () {
+			var list = new List();
+			list.push('TEST1');
+			list.push('TEST2');
+			list.push('TEST3');
+
+			expect(list.find('TEST4')).to.be.null;
 		});
 	});
 });

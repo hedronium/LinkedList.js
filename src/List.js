@@ -46,6 +46,8 @@ List.prototype.push = function (value) {
 
 	this._tail = node;
 	this._count++;
+
+	return node;
 };
 
 List.prototype.pop = function () {
@@ -82,6 +84,8 @@ List.prototype.unshift = function (value) {
 	this._head = node;
 
 	this._count++;
+
+	return node;
 };
 
 List.prototype.shift = function () {
@@ -137,6 +141,20 @@ List.prototype.empty = function () {
 
 List.prototype.isEmpty = function () {
 	return this._head === null;
+};
+
+List.prototype.find = function (value) {
+	var node = this._head;
+
+	while (node !== null) {
+		if (node.value() === value) {
+			return node;
+		}
+
+		node = node.next();
+	}
+
+	return null;
 };
 
 module.exports = List;
