@@ -1,5 +1,4 @@
 #LinkedList.js
-----
 A simple doubly linked list implementation in Javascript.
 
 ## Installation
