@@ -157,4 +157,14 @@ List.prototype.find = function (value) {
 	return null;
 };
 
+List.prototype.each = function (callback) {
+	var node = this._head;
+	var i = 0;
+	while (node !== null) {
+		callback(i, node);
+		node = node.next();
+		i++;
+	}
+}
+
 module.exports = List;

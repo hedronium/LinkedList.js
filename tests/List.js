@@ -272,4 +272,31 @@ describe('List class', function () {
 			expect(list.find('TEST4')).to.be.null;
 		});
 	});
+
+	describe('each method', function () {
+		it('It helps traverse the list from head to tail in order', function () {
+			var list = new List();
+			list.push('TEST1');
+			list.push('TEST2');
+			list.push('TEST3');
+
+			var i = 0;
+			list.each(function (index, node) {
+				switch (index) {
+					case 0:
+						expect(node.value()).to.be.equal('TEST1');
+						break;
+					case 1:
+						expect(node.value()).to.be.equal('TEST2');
+						break;
+					case 2:
+						expect(node.value()).to.be.equal('TEST3');
+						break;
+				}
+				i++;
+			});
+
+			expect(i).to.be.equal(3);
+		});
+	});
 });

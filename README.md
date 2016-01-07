@@ -22,6 +22,14 @@ list.push('HUEHUE');
 ```
 
 ### Traversing the List
+#### with each(callback)
+```javascript
+list.each(function (index, node) {
+    console.log(index + ': ' + node.value());
+});
+```
+
+#### like a badass
 ```javascript
 var node = list.head();
 
