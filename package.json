@@ -1,6 +1,6 @@
 {
   "name": "linkedlist-js",
-  "version": "1.2.3",
+  "version": "1.2.5",
   "description": "A Doubly Linked List Implementation in Javascript",
   "scripts": {
     "test": "mocha tests"
