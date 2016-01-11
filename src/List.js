@@ -1,9 +1,26 @@
 var Node = require('./Node');
 
-var List = function () {
+var List = function (head, tail) {
+	if (typeof head !== typeof tail) {
+		throw 'Head and Tail are not of the same type.';
+	}
+
 	this._count = 0;
-	this._head = null;
-	this._tail = null;
+	this._head = head || null;
+	this._tail = tail || null;
+
+	if (!(head instanceof Node || this._head === null)) {
+		throw 'Head is neither a Node nor Null';
+	}
+
+	if (this._head !== null) {
+		var i = 0;
+		this.each(function () {
+			i++;
+		});
+
+		this._count = i;
+	}
 };
 
 List.prototype.head = function () {
@@ -16,16 +33,6 @@ List.prototype.tail = function () {
 
 List.prototype.count = function () {
 	return this._count;
-};
-
-List.prototype.get = function (index) {
-	var node = this._head;
-
-	for (var i = 0; i < index; i++) {
-		node = node.next();
-	}
-
-	return node;
 };
 
 List.prototype.set = function (index, value) {
@@ -108,18 +115,6 @@ List.prototype.shift = function () {
 	return node;
 };
 
-List.prototype.asArray = function () {
-	var arr = [];
-	var node = this._head;
-
-	while (node) {
-		arr.push(node.value());
-		node = node.next();
-	}
-
-	return arr;
-};
-
 List.prototype.truncateTo = function (length) {
 	this._count = length;
 
@@ -131,7 +126,6 @@ List.prototype.truncateTo = function (length) {
 	}
 
 	var node = this.get(length-1);
-	node.setNext(null);
 	this._tail = node;
 };
 
@@ -143,28 +137,75 @@ List.prototype.isEmpty = function () {
 	return this._head === null;
 };
 
-List.prototype.find = function (value) {
+List.prototype.each = function (callback, context) {
 	var node = this._head;
 
-	while (node !== null) {
-		if (node.value() === value) {
-			return node;
+	if (node === null) {
+		return;
+	}
+
+	var i = 0;
+	var till = this._tail.next();
+
+	do {
+		if(callback.call(context, i, node) === false) {
+			return;
 		}
 
 		node = node.next();
-	}
-
-	return null;
+		i++;
+	} while (node !== till);
 };
 
-List.prototype.each = function (callback) {
-	var node = this._head;
-	var i = 0;
-	while (node !== null) {
-		callback(i, node);
-		node = node.next();
-		i++;
+List.prototype.asArray = function () {
+	var arr = [];
+
+	this.each(function (index, node) {
+		arr.push(node.value());
+	});
+
+	return arr;
+};
+
+List.prototype.find = function (value, context) {
+	var comparator = value instanceof Function ? value : (function (node) {
+		return node.value() === value;
+	});
+
+	var finding = null;
+
+	this.each(function (index, node) {
+		if (comparator.call(context, node, index)) {
+			finding = node;
+			return false;
+		}
+	});
+
+	return finding;
+};
+
+List.prototype.get = function (index) {
+	if (index < 0 || (index+1) > this._count) {
+		return null;
 	}
-}
+
+	var node = this._head;
+
+	for (var i = 0; i < index; i++) {
+		node = node.next();
+	}
+
+	return node;
+};
+
+List.prototype.reduce = function (callback, context, initial) {
+	var x = initial || 0;
+
+	this.each(function (index, node) {
+		x = callback.call(context, x, node, index, this);
+	});
+
+	return x;
+};
 
 module.exports = List;

@@ -29,12 +29,4 @@ Node.prototype.setNext = function (node) {
 	this._next = node;
 };
 
-Node.prototype.isHead = function () {
-	return this._previous === null;
-};
-
-Node.prototype.isTail = function () {
-	return this._next === null;
-};
-
 module.exports = Node;

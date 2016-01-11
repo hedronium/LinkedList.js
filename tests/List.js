@@ -3,6 +3,48 @@ var List = require('../src/List');
 var Node = require('../src/Node');
 
 describe('List class', function () {
+	describe('Constructor Method', function () {
+		it('Creates an empty list', function () {
+			var a = new List();
+
+			expect(a.head()).to.be.null;
+			expect(a.tail()).to.be.null;
+			expect(a.count()).to.be.equal(0);
+		});
+
+		it('Creates a new list from existing list', function () {
+			var a = new List();
+			a.push(1);
+			a.push(2);
+
+			var b = new List(a.head(), a.tail());
+			expect(b.head()).to.be.equal(a.head());
+			expect(b.tail()).to.be.equal(a.head().next());
+			expect(b.count()).to.be.equal(a.count());
+		});
+
+		it('Throws an exception if head is neither null nor a Node', function () {
+			expect(function () { new List('HUE', 'MAN'); }).to.throw('Head is neither a Node nor Null');
+		});
+
+		it('Throws an exception if head & tail aint the same type', function () {
+			expect(function () { new List(new Node(), 'X'); }).to.throw('Head and Tail are not of the same type.');
+		});
+	});
+
+	describe('reduce method', function () {
+		it('Reduces the List intoa  single value', function () {
+			var list = new List();
+			list.push(1);
+			list.push(2);
+			list.push(3);
+
+			expect(list.reduce(function (prev, node) {
+				return prev + node.value();
+			}, null, 0)).to.be.equal(6);
+		});
+	});
+
 	describe('isEmpty method', function () {
 		it('Returns `true` if list is empty', function () {
 			var list = new List();
@@ -171,6 +213,20 @@ describe('List class', function () {
 			expect(list.get(1).value()).to.be.equal('TEST2');
 			expect(list.get(2).value()).to.be.equal('TEST3');
 		});
+
+		it('Returns null if the index is negative', function () {
+			var list = new List();
+			list.push('TEST1');
+
+			expect(list.get(-1)).to.be.null;
+		});
+
+		it('Returns null if the a node at the specified index does not exist', function () {
+			var list = new List();
+			list.push('TEST1');
+
+			expect(list.get(1)).to.be.null;
+		});
 	});
 
 	describe('set method', function () {
@@ -263,13 +319,24 @@ describe('List class', function () {
 			expect(list.find('TEST2')).to.be.equal(find);
 		});
 
-		it('Performs a linear search on the List and returns null if nto found', function () {
+		it('Performs a linear search on the List and returns null if not found', function () {
 			var list = new List();
 			list.push('TEST1');
 			list.push('TEST2');
 			list.push('TEST3');
 
 			expect(list.find('TEST4')).to.be.null;
+		});
+
+		it('Performs a linear search on the List with a comparator function', function () {
+			var list = new List();
+			list.push(1);
+			list.push(2);
+			list.push(3);
+
+			expect(list.find(function (node) {
+				return node.value()+1 === 3;
+			}).value()).to.be.equal(2);
 		});
 	});
 
@@ -293,6 +360,7 @@ describe('List class', function () {
 						expect(node.value()).to.be.equal('TEST3');
 						break;
 				}
+
 				i++;
 			});
 

@@ -50,28 +50,4 @@ describe('Node class', function () {
 			expect(node.previous()).to.be.equal(previous_node);
 		});
 	});
-
-	describe('isTail method', function () {
-		it('Returns true if the next pointer is null', function () {
-			var node = new Node();
-			expect(node.isTail()).to.be.true;
-		});
-
-		it('Returns false if the next pointer is not null', function () {
-			var node = new Node(null, null, new Node());
-			expect(node.isTail()).to.be.false;
-		});
-	});
-
-	describe('isHead method', function () {
-		it('Returns true if the previous pointer is null', function () {
-			var node = new Node();
-			expect(node.isHead()).to.be.true;
-		});
-
-		it('Returns false if the previous pointer is not null', function () {
-			var node = new Node(null, new Node());
-			expect(node.isHead()).to.be.false;
-		});
-	});
 });
