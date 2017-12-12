@@ -115,6 +115,20 @@ List.prototype.shift = function () {
 	return node;
 };
 
+List.prototype.removeNode = function (node) {
+  if (node === this._head) {
+    this.shift();
+  } else if (node === this._tail) {
+    this.pop();
+  } else {
+    const prev = node.previous();
+    const next = node.next();
+    prev.setNext(next);
+    next.setPrevious(prev);
+    this._count--;
+  }
+};
+
 List.prototype.truncateTo = function (length) {
 	this._count = length;
 

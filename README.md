@@ -79,6 +79,21 @@ list.push('B');
 list.shift().value(); //'A'
 ```
 
+#### removeNode(node)
+Remove a specific `Node` (An _O(1)_ complexity action in linked lists)
+```
+var list = new List();
+list.push('A');
+list.push('B');
+list.push('C');
+ 
+var node = list.find('B');
+list.removeNode(node);
+list.count(); // 2
+list.get(0).value(); // 'A'
+list.get(1).value(); // 'C';
+```
+
 #### get(index)
 Returns the `Node` at the specified index. _(Linear Lookup, not very performant)_
 ```javascript
