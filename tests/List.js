@@ -140,6 +140,56 @@ describe('List class', function () {
 		});
 	});
 
+	describe('remove method', function () {
+		it('Removes a single node', function () {
+      var list = new List();
+      var node = list.push('TEST1');
+			list.removeNode(node);
+
+      expect(list.count()).to.be.equal(0);
+
+      expect(list.head()).to.be.null;
+      expect(list.tail()).to.be.null;
+		});
+
+		it('Shifts if node is the list\'s head', function () {
+      var list = new List();
+      var node = list.push('TEST1');
+      var persistedNode = list.push('TEST2');
+
+      list.removeNode(node);
+
+      expect(list.count()).to.be.equal(1);
+      expect(list.head()).to.be.equal(persistedNode);
+      expect(list.tail()).to.be.equal(persistedNode);
+		});
+
+    it('Pops if node is the list\'s tail', function () {
+      var list = new List();
+      var persistedNode = list.push('TEST1');
+      var node = list.push('TEST2');
+
+      list.removeNode(node);
+
+      expect(list.count()).to.be.equal(1);
+      expect(list.head()).to.be.equal(persistedNode);
+      expect(list.tail()).to.be.equal(persistedNode);
+    });
+
+    it('Removes a mid-list node', function () {
+      var list = new List();
+      var head = list.push('TEST1');
+      var node = list.push('TEST2');
+      var tail = list.push('TEST3');
+
+      list.removeNode(node);
+
+      expect(list.count()).to.be.equal(2);
+      expect(list.head()).to.be.equal(head);
+      expect(list.tail()).to.be.equal(tail);
+    });
+	});
+
 	describe('head method', function () {
 		it('Returns Null when list is empty', function () {
 			var list = new List();
